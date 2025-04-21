@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    Quiz
+    <div class="quiz_question">Question: {{ question.text }}</div>
+    <form method="POST">
+        <div>
+            <textarea class="form-control" name="answer" rows="5" placeholder="Type here..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

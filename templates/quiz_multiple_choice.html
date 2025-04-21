@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+Quiz
+<div class="quiz_question">Question: {{ question.text }}</div>
+    <form method="POST">
+        {% for option in question.options %}
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="answer" id="option{{ loop.index }}" value="{{ option }}" required>
+            <label class="form-check-label" for="option{{ loop.index }}">
+                {{ option }}
+            </label>    
+        </div>
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
