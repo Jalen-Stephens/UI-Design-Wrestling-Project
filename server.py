@@ -18,13 +18,28 @@ questions = {
     },
     1:{
         "type": "textbox",
-        "text": "How many points were scored by orange in this exchange?"  
+        "text": "How many points were scored by orange in this exchange?", 
+        "media":  "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHFrbXVnMXFuNjB5NXRuZWcwcWp0aXZ4MWN2emJsZXplenQwNnR6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/upJkEoxKC97OO3wv4q/giphy.gif"
     },
     2:{
         "type": "multiple_choice",
         "text": "How many points are scored in a takedown?", 
+        "media": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzlhNGVob3R1eG8wZ3AwbXRtNWV2Nzh5ZTE5eW4xbXFycWV1a2s5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bM1uXhDYFMzU4GfJdq/giphy.gif",
         "options": ["2", "4", "3"]
-    }
+    },
+    3:{
+        "type": "multiple_choice",
+        "text": "What type of score was this from the wrestler in Orange?", 
+        "media":  "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHFrbXVnMXFuNjB5NXRuZWcwcWp0aXZ4MWN2emJsZXplenQwNnR6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/upJkEoxKC97OO3wv4q/giphy.gif",
+        "options": ["Nearfall", "Escape", "Takedown", "Reversal"]
+    },
+    4:{
+        "type": "drag_drop",
+        "text": "What position was the Cornell wrestler in before scoring? What about after scoring?",
+        "drag_options": ["Top","Bottom","Neutral"],
+        "drop_options": ["Before","After"],
+        "media": "https://i.postimg.cc/FFMwj4KX/9rn289.gif"
+    },
 }
 
 answers = {
@@ -39,6 +54,14 @@ answers = {
     2:{
         "answer": 3,
         "submission":None
+    },
+    3:{
+        "answer": "Takedown",
+        "submission":None
+    },
+    4:{
+        "answer": {"Before":"Bottom","After":"Top"},
+        "submission": {}
     },
 }
 
@@ -145,16 +168,26 @@ def quiz(question_id):
     
     question = questions[question_id]
     question_type = question['type']
+    is_correct = False
+    
     if request.method == 'POST':
         if(question_type == "drag_drop"):
-            submission = [line.split(',') for line in request.form.getlist('submission')]
-            for i in submission:
-                answers[question_id]["submission"][i[0]] = i[1]
-        else:
-            print(request.form.get('submission'))
+            submission = dict(request.form)
+            answers[question_id]["submission"] = submission
+            is_correct = answers[question_id]["answer"] == submission
+            return jsonify({'correct': is_correct, 'correct_answer': answers[question_id]["answer"]})
+        elif question_type == 'textbox':
+            submission = request.form.get('answer').strip()
+            answers[question_id]["submission"] = submission
+            is_correct = str(answers[question_id]["answer"]) == str(submission)
+            return jsonify({'correct': is_correct, 'correct_answer': answers[question_id]["answer"]})
+        elif question_type == 'multiple_choice':
+            submission = request.form.get('answer')
+            answers[question_id]["submission"] = submission
+            is_correct = str(answers[question_id]["answer"]) == str(submission)
+            return jsonify({'correct': is_correct, 'correct_answer': answers[question_id]["answer"]})
         return redirect(url_for('quiz', question_id=question_id+1))
     
-    # differential between the three q&a types
     template = f"quiz_{question['type']}.html"
     return render_template(template, question=question, question_id=question_id, nav_lessons=get_nav_sections())
 
@@ -163,13 +196,13 @@ def quiz_score():
     score = 0
     for i in answers:
         if(questions[i]["type"] == "drag_drop"):
-            if(answers[i]["answer"] == answers[i]["submission"]):
+            if(str(answers[i]["answer"]) == str(answers[i]["submission"])):
                 score += 1
         elif(questions[i]["type"] == "multiple_choice"):
-            if(answers[i]["answer"] == answers[i]["submission"]):
+            if(str(answers[i]["answer"]) == str(answers[i]["submission"])):
                 score += 1
         else:
-            if(answers[i]["answer"] == answers[i]["submission"]):
+            if(str(answers[i]["answer"]) == str(answers[i]["submission"])):
                 score += 1
     return render_template('quiz_score.html', score=score, answers=answers, nav_lessons=get_nav_sections())
   
