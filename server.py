@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
 from flask import Flask
 from flask import render_template
 from flask import Response, request, jsonify, redirect, url_for
-
 import re
 app = Flask(__name__)
 
@@ -47,7 +49,24 @@ lessons = {
         "main-text": '“Bottom” is when one wrestler is under the other (White Singlet)',
         "sub-text": ['May be chosen as starting position for 2nd and 3rd periods','Results after one wrestler takes the other from neutral to the mat'],
         "image": "https://i.postimg.cc/x8n08RbM/bottom-lesson.jpg",
-    }
+    },
+    3:{
+        "lesson_id": "3",
+        "Section": "Takedown", 
+        "title": "Takedown",
+        "main-text": 'Takedown” is when one wrestler takes another down from neutral onto the mat.',
+        "sub-text": ['3 Points Awarded to Blue assuming he brings yellow to the ground'],
+        "expanded-text": ['A takedown is called by the ref once they deem a wrestler has gained control of the other.', 'This can be vague and result in confusing situations.'],
+        "image": "https://i.postimg.cc/QtTPCNd1/roman-bravo-young-ragusin.avif",
+    },
+    4:{
+        "lesson_id": "4",
+        "Section": "Takedown", 
+        "title": "Takedown",
+        "main-text": 'The wrestler in yellow demonstrates control',
+        "sub-text": ['He hooks the ankle of his opponent!'],
+        "image": "https://i.postimg.cc/bJVXDVxf/Wrestling-Takedown-GIF-by-NCAA-Championships-1.gif",
+    },
 }
 
 
@@ -82,6 +101,13 @@ def positions():
 @app.route('/api/positions')
 def api_positions():
     return jsonify(lessons)
+
+@app.route('/learn/<int:lesson_id>', methods=['GET'])
+def learn(lesson_id):
+    if lesson_id < 0 or lesson_id >= len(lessons):
+        return redirect(url_for('quiz', question_id=0))  # Redirect to quiz if out of bounds
+    lesson = lessons[lesson_id]
+    return render_template('learn.html', lesson=lesson, lesson_id=lesson_id)
 
 
 if __name__ == '__main__':
