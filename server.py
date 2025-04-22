@@ -53,7 +53,7 @@ lessons = {
     3:{
         "lesson_id": "3",
         "Section": "Takedown", 
-        "title": "Takedown",
+        "title": "Takedown Scoring",
         "main-text": 'Takedown” is when one wrestler takes another down from neutral onto the mat.',
         "sub-text": ['3 Points Awarded to Blue assuming he brings yellow to the ground'],
         "expanded-text": ['A takedown is called by the ref once they deem a wrestler has gained control of the other.', 'This can be vague and result in confusing situations.'],
@@ -62,17 +62,64 @@ lessons = {
     4:{
         "lesson_id": "4",
         "Section": "Takedown", 
-        "title": "Takedown",
+        "title": "Takedown Scoring",
         "main-text": 'The wrestler in yellow demonstrates control',
         "sub-text": ['He hooks the ankle of his opponent!'],
         "image": "https://i.postimg.cc/bJVXDVxf/Wrestling-Takedown-GIF-by-NCAA-Championships-1.gif",
     },
+    5:{
+        "lesson_id": "5",
+        "Section": "Nearfall", 
+        "title": "Nearfall Scoring",
+        "main-text": '“Nearfall” or Back points are scored when a wrestler’s back is exposed within a 45° angle from the mat.',
+        "sub-text": [
+            'Points are counted roughly every second by the referee, visualized by a sweeping motion with their arm.',
+            'Minimum of 2 points.',
+            'Maximum of 4 points.',
+            'Wrestler in black is scoring back points.'
+        ],
+        "image": "https://i.postimg.cc/cH32JWth/temp-Image-Iy11-C0.avif",
+    },
+    6:{
+        "lesson_id": "6",
+        "Section": "Reversals", 
+        "title": "Reversal Scoring",
+        "main-text": 'A “Reversal” is when the wrestler on the bottom gains control over their opponent, ending up on top.',
+        "sub-text": [
+            'Reversals are worth 2 points.',
+            'They demonstrate a significant change in control during the match.',
+            'Wrestler in red performs a reversal.'
+        ],
+        "image": "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcng5YW8ydWgyb3NhNG91cmI3ZnRlaGJwYzdldmtmbXdqajA0cDU4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT1R9XsuEBIyFgplcI/giphy.gif",
+    },
+    7:{
+        "lesson_id": "7",
+        "Section": "Escapes", 
+        "title": "Escape Scoring",
+        "main-text": 'An “Escape” is when the wrestler on the bottom gets away from their opponent and returns to a neutral position.',
+        "sub-text": [
+            'Escapes are worth 1 point.',
+            'They demonstrate the ability to break free from an opponent’s control.',
+            'Wrestler in light grey performs an escape to return to neutral.'
+        ],
+        "image": "https://i.makeagif.com/media/7-13-2021/rBSzRR.gif",
+    }
 }
 
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', nav_lessons=get_nav_sections())
+
+def get_nav_sections():
+    unique_sections = {}
+    for k, v in lessons.items():
+        section = v['Section']
+        if section not in unique_sections:
+            unique_sections[section] = v
+    return unique_sections.values()
+
+
 
 @app.route('/quiz/<int:question_id>', methods=['GET', 'POST'] )
 def quiz(question_id):
@@ -87,16 +134,16 @@ def quiz(question_id):
     
     # differential between the three q&a types
     template = f"quiz_{question['type']}.html"
-    return render_template(template, question=question, question_id=question_id)
+    return render_template(template, question=question, question_id=question_id, nav_lessons=get_nav_sections())
 
 @app.route('/quiz_score')
 def quiz_score():
-    return render_template('quiz_score.html')
+    return render_template('quiz_score.html', nav_lessons=get_nav_sections())
   
 
 @app.route('/positions')
 def positions():
-    return render_template('positions.html')
+    return render_template('positions.html', nav_lessons=get_nav_sections())
 
 @app.route('/api/positions')
 def api_positions():
@@ -107,7 +154,7 @@ def learn(lesson_id):
     if lesson_id < 0 or lesson_id >= len(lessons):
         return redirect(url_for('quiz', question_id=0))  # Redirect to quiz if out of bounds
     lesson = lessons[lesson_id]
-    return render_template('learn.html', lesson=lesson, lesson_id=lesson_id)
+    return render_template('learn.html', lesson=lesson, lesson_id=lesson_id, nav_lessons=get_nav_sections())
 
 
 if __name__ == '__main__':

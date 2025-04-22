@@ -23,15 +23,17 @@
   <nav class="navbar navbar-expand-lg bg-danger-subtle px-4">
     <a class="navbar-brand fw-bold" href="#">Learn</a>
     <ul class="navbar-nav flex-row gap-4">
-      <li class="nav-item"><a class="nav-link" href="#">Positions</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Takedown</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Nearfall</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Reversal</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Escape</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Penalty</a></li>
-      <li class="nav-item"><a class="nav-link" href="/quiz/0">Quiz</a></li>
+      {% for lesson in nav_lessons %}
+        <li class="nav-item">
+          <a class="nav-link" href="/learn/{{ lesson.lesson_id }}">{{ lesson.Section }}</a>
+        </li>
+      {% endfor %}
+      <li class="nav-item">
+        <a class="nav-link" href="/quiz/0">Quiz</a>
+      </li>
     </ul>
   </nav>
+  
 
   <main class="py-4">
     {% block content %}{% endblock %}
