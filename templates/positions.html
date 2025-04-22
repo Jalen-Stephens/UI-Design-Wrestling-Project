@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <h1 id="section-title" class="text-center my-4"></h1>
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <h2 id="title"></h2>
+      <p id="main-text"></p>
+      <ul id="sub-text"></ul>
+    </div>
+    <div class="col-md-6 image-box text-center">
+      <img id="lesson-img" src="" alt="Lesson Image" class="img-fluid">
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-danger" onclick="prevLesson()">BACK</button>
+    <button class="btn btn-primary" onclick="nextLesson()">NEXT</button>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='positions.js') }}"></script>
+{% endblock %}

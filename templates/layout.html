@@ -1,64 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="data:,">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Wrestling Lessons{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-danger-subtle px-4">
+    <a class="navbar-brand fw-bold" href="#">Learn</a>
+    <ul class="navbar-nav flex-row gap-4">
+      <li class="nav-item"><a class="nav-link" href="#">Positions</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Takedown</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Nearfall</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Reversal</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Escape</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Penalty</a></li>
+      <li class="nav-item"><a class="nav-link" href="/quiz/0">Quiz</a></li>
+    </ul>
+  </nav>
 
-        <!-- jquery -->
-        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>  
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <main class="py-4">
+    {% block content %}{% endblock %}
+  </main>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
-
-        <title>Score Wrestling</title>
-    </head>
-    <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-custom">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">Learn</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="row w-100">
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="#">Positions</a>
-                        </div>
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="#">Takedown</a>
-                        </div>
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="#">Nearfall</a>
-                        </div>
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="#">Reversal</a>
-                        </div>
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="#">Escape</a>
-                        </div>
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="#">Penalty</a>
-                        </div>
-                        <div class="col-md text-center">
-                            <a class="nav-link" href="{{ url_for('quiz', question_id=0) }}">Quiz</a>
-                        </div>
-                    </div>
-                </div>    
-            </div>
-
-
-        </nav>
-
-        <div class="container">   
-            {% block content %}
-            {% endblock %}
-        </div>
-        <script src="{{ url_for('static', filename='layout.js') }}"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

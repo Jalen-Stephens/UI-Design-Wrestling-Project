@@ -30,7 +30,7 @@ lessons = {
         "title": "Neutral",
         "main-text": "Every match starts in “Neutral”, where both wrestlers are on their feet facing each other.",
         "sub-text": ['Crouched down in their “stances”','Looking for offensive and defensive scoring'],
-        "media": "https://images2.minutemediacdn.com/image/upload/c_crop,w_4010,h_2255,x_0,y_0/c_fill,w_2160,ar_16:9,f_auto,q_auto,g_auto/images%2FImagnImages%2Fmmsport%2Fall_penn_state%2F01jpxxdds2hs0ce4jydd.jpg",
+        "image": "https://i.postimg.cc/Ss7hBMts/neutral-lesson.jpg",
     },
     1:{
         "lesson_id": "1",
@@ -38,7 +38,7 @@ lessons = {
         "title": "Top",
         "main-text": '“Top” is when one wrestler is on top of the other (Black Singlet)',
         "sub-text": ['May be chosen as starting position for 2nd and 3rd periods','Results after one wrestler takes the other from neutral to the mat'],
-        "media": "https://www.wrestlingmindset.com/wp-content/uploads/2018/01/Top-Position.jpg",
+        "image": "https://i.postimg.cc/15W9RDRV/top-lesson.jpg",
     },
     2:{
         "lesson_id": "2",
@@ -46,7 +46,7 @@ lessons = {
         "title": "Bottom",
         "main-text": '“Bottom” is when one wrestler is under the other (White Singlet)',
         "sub-text": ['May be chosen as starting position for 2nd and 3rd periods','Results after one wrestler takes the other from neutral to the mat'],
-        "media": "https://www.wrestlingmindset.com/wp-content/uploads/2018/01/Top-Position.jpg",
+        "image": "https://i.postimg.cc/x8n08RbM/bottom-lesson.jpg",
     }
 }
 
@@ -74,5 +74,15 @@ def quiz(question_id):
 def quiz_score():
     return render_template('quiz_score.html')
   
+
+@app.route('/positions')
+def positions():
+    return render_template('positions.html')
+
+@app.route('/api/positions')
+def api_positions():
+    return jsonify(lessons)
+
+
 if __name__ == '__main__':
    app.run(debug = True, port=5001)
