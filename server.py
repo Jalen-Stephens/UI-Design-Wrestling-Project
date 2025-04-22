@@ -5,6 +5,8 @@ from flask import Flask
 from flask import render_template
 from flask import Response, request, jsonify, redirect, url_for
 import re
+import json
+import datetime
 app = Flask(__name__)
 
 #quiz questions
@@ -212,7 +214,29 @@ def learn(lesson_id):
     if lesson_id < 0 or lesson_id >= len(lessons):
         return redirect(url_for('quiz', question_id=0))  # Redirect to quiz if out of bounds
     lesson = lessons[lesson_id]
-    return render_template('learn.html', lesson=lesson, lesson_id=lesson_id, nav_lessons=get_nav_sections())
+    return render_template('learn.html', lesson=lesson, lesson_id=lesson_id, nav_lessons=get_nav_sections(), total_lessons=len(lessons))
+
+
+@app.route('/log-time', methods=['POST'])
+def log_time():
+    try:
+        raw_data = request.data.decode('utf-8')
+        data = json.loads(raw_data)
+
+        lesson_id = data.get('lesson_id')
+        time_spent = data.get('time_spent')
+
+        print(f"[LOG] Lesson {lesson_id} — Time Spent: {time_spent} seconds")
+
+        with open("user_time_log.csv", "a") as f:
+            f.write(f"{lesson_id},{time_spent},{datetime.datetime.now()}\n")
+
+        return jsonify({"status": "logged"}), 200
+
+    except Exception as e:
+        print("Log time error:", e)
+        return jsonify({"status": "error"}), 400
+
 
 
 if __name__ == '__main__':
