@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
-
 {% block content %}
-test content
+<div class="container text-center mt-5">
+    <h1 class="display-4 fw-bold">Learn to score a wrestling match</h1>
+    <p class="lead my-4">
+        Click the nav bar to skip to a specific type of scoring, or learn everything from the beginning!
+    </p>
+    <img src="https://cdn.freebiesupply.com/logos/large/2x/ncaa-4-logo-png-transparent.png" 
+         alt="NCAA Logo" class="img-fluid my-4" style="max-height: 150px;">
+    <div class="my-4">
+        <a href="{{ url_for('learn', lesson_id=0) }}" class="btn btn-lg btn-primary mx-3 home-btn">LEARN</a>
+        <a href="{{ url_for('quiz', question_id=0) }}" class="btn btn-lg btn-primary mx-3 home-btn">QUIZ</a>
+    </div>
+</div>
 {% endblock %}
