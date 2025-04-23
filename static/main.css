@@ -5,4 +5,12 @@
 
 .quiz_question {
     color: rgb(115, 110, 110);
+    padding: 10px;
+    font-size: 20px;
+}
+
+.page_header {
+    color: black;
+    font-size: 30px;
+    text-align: center;
 }

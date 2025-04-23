@@ -1,13 +1,52 @@
 {% extends "layout.html" %}
 {% block content %}
+<script>
+    $(document).ready(function() {
+        const questionId = window.location.pathname.split('/').pop();
+        const $quizForm = $('#quizForm.textbox');
+        const $feedbackMessage = $('#feedbackMessage');
+        const $nextButton = $('#next-button');
+        // Handle form submission via AJAX
+        $quizForm.submit(function (e) {
+            e.preventDefault();
+            const formData =  $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: '/quiz/' + questionId,
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.correct) {
+                        $feedbackMessage.removeClass('alert-danger').addClass('alert-success').text('Congratulations, you got it correct!').show();
+                    } else {
+                        $feedbackMessage.removeClass('alert-success').addClass('alert-danger').text('Incorrect. The answer is: '+ response.correct_answer).show();
+                    }
+                    $nextButton.attr('href', '/quiz/' + (parseInt(questionId) + 1)).removeClass('d-none');
+                    $quizForm.find('textarea, button').prop('disabled', true);
+                },
+                error: function () {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>
 <div class="container">
-    Quiz
+    <div class="page_header">Quiz</div>
     <div class="quiz_question">Question: {{ question.text }}</div>
-    <form method="POST">
+    {% if question.media %}
+    <div class="quiz_media">
+        <img src="{{ question.media }}" alt="Question Media">
+    </div>
+    {% endif %}
+    <form id="quizForm" class="textbox" method="POST">
         <div>
             <textarea class="form-control" name="answer" rows="5" placeholder="Type here..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    <div id="feedbackMessage" class="mt-3" style="display: none;"></div>
+    <a href="{{ url_for('quiz', question_id=question_id + 1) }}" class="btn btn-success mt-2 d-none" id="next-button">Next</a> 
 </div>
 {% endblock %}
