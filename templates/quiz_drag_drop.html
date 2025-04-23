@@ -1,5 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
-
-
+<script>
+    function onDragStart(event) {
+      event.dataTransfer.setData("text", event.target.id);
+    }
+    
+    function onDragOver(event) {
+      event.preventDefault();
+    }
+    
+    function onDrop(event) {
+      event.preventDefault();
+      const data = event.dataTransfer.getData("text");
+      event.target.appendChild(document.getElementById(data));
+      hidden_input = document.getElementById(event.target.id + "_submit")
+      hidden_input.value = [event.target.id, data]
+    }
+</script>
+Quiz
+<div class="quiz_question">Question: {{ question.text }}</div>
+    <img id="quiz_media" src="{{ question.media }}"></img>
+    <form method="POST">
+        {% for option in question.drag_options %}
+        <p id="{{ option }}" draggable="true" ondragstart="onDragStart(event)" style="border: 1px solid black;">{{ option }}</p>
+        {% endfor %}
+        <br>
+        {% for option in question.drop_options %}
+        <div id="{{ option }}" ondrop="onDrop(event)" ondragover="onDragOver(event)" style="border: 1px solid black;">{{ option }}</div>
+        <input type="hidden" name="submission" id="{{ option }}_submit">
+        <br>
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 {% endblock %}

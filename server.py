@@ -10,19 +10,36 @@ app = Flask(__name__)
 #quiz questions
 questions = {
     0:{
-        "type": "multiple_choice",
-        "text": "Sample Question 1", 
-        "options": ["opt 1", "opt 2", "opt 3"]
+        "type": "drag_drop",
+        "text": "What position is the wrestler in 'Irish' in before and after the move?",
+        "drag_options": ["Top", "Bottom", "Neutral"],
+        "drop_options": ["Start", "End"],
+        "media": "https://i.postimg.cc/BnC8WwGz/Scramble-Takedown.gif"
     },
     1:{
         "type": "textbox",
-        "text": "Sample Question 2"  
+        "text": "How many points were scored by orange in this exchange?"  
     },
     2:{
-        "type": "drag_drop",
-        "text": "Sample Question 3",
-        "pairs": {"one":"1", "two":"2"}
+        "type": "multiple_choice",
+        "text": "How many points are scored in a takedown?", 
+        "options": ["2", "4", "3"]
     }
+}
+
+answers = {
+    0:{
+        "answer": {"Start":"Neutral","End":"Top"},
+        "submission":{}
+    },
+    1:{
+        "answer": 3,
+        "submission":None
+    },
+    2:{
+        "answer": 3,
+        "submission":None
+    },
 }
 
 lessons = {
@@ -129,7 +146,12 @@ def quiz(question_id):
     question = questions[question_id]
     question_type = question['type']
     if request.method == 'POST':
-        user_submission = request.form.get('submission')
+        if(question_type == "drag_drop"):
+            submission = [line.split(',') for line in request.form.getlist('submission')]
+            for i in submission:
+                answers[question_id]["submission"][i[0]] = i[1]
+        else:
+            print(request.form.get('submission'))
         return redirect(url_for('quiz', question_id=question_id+1))
     
     # differential between the three q&a types
@@ -138,7 +160,18 @@ def quiz(question_id):
 
 @app.route('/quiz_score')
 def quiz_score():
-    return render_template('quiz_score.html', nav_lessons=get_nav_sections())
+    score = 0
+    for i in answers:
+        if(questions[i]["type"] == "drag_drop"):
+            if(answers[i]["answer"] == answers[i]["submission"]):
+                score += 1
+        elif(questions[i]["type"] == "multiple_choice"):
+            if(answers[i]["answer"] == answers[i]["submission"]):
+                score += 1
+        else:
+            if(answers[i]["answer"] == answers[i]["submission"]):
+                score += 1
+    return render_template('quiz_score.html', score=score, answers=answers, nav_lessons=get_nav_sections())
   
 
 @app.route('/positions')

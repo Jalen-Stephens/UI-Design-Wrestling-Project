@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <div>
+        Score: {{ score }}
+    </div>
+    <br>
+    <div>
+        {% for question in answers %}
+        <div>
+            Correct Answer: {{ answers[question].answer }}
+        </div>
+        <div>
+            Your Answer: {{ answers[question].submission }}
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
