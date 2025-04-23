@@ -4,13 +4,17 @@
 <head>
     <script>
         let lesson = {{ lesson|tojson }};
-    </script>
+        let lesson_id = {{ lesson_id }};
+    </script>    
     <script src="{{ url_for('static', filename='learn.js') }}"></script>
 </head>
 
 <html lang="en">
     <body>
         <div class="container my-4">
+            <div class="d-flex justify-content-end">
+                <span class="badge bg-secondary fs-5">{{ lesson_id + 1 }}/{{ total_lessons }}</span>
+            </div>            
             <h1 id="section-title" class="text-center my-4">{{ lesson.title }}</h1>
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -23,14 +27,13 @@
                     </ul>
                 </div>
                 <div class="col-md-6 image-box text-center">
-                    {% if 'expanded-text' in lesson %}
-                        <button id="expand" class="btn btn-primary">Learn More</button>
-                    {% endif %}
+                    
                     <img id="lesson-img" src="{{ lesson.image }}" alt="Lesson Image" class="img-fluid">
                 </div>
             </div>
             <div class="d-flex justify-content-between mt-4">
-                <a class="btn btn-danger" id="prev-btn" href="{{ url_for('learn', lesson_id=lesson_id - 1) }}">BACK</a>
+                <a class="btn btn-danger" id="prev-btn"
+                href="{{ url_for('home') if lesson_id == 0 else url_for('learn', lesson_id=lesson_id - 1) }}">BACK</a>
                 <a class="btn btn-primary" id="next-btn" href="{{ url_for('learn', lesson_id=lesson_id + 1) }}">NEXT</a>
             </div>
         </div>
