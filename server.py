@@ -45,32 +45,32 @@ answers = {
 lessons = {
     0:{
         "lesson_id": "0",
-        "Section": "Posistions", 
-        "title": "Neutral",
+        "Section": "Neutral", 
+        "title": "Positions",
         "main-text": "Every match starts in “Neutral”, where both wrestlers are on their feet facing each other.",
         "sub-text": ['Crouched down in their “stances”','Looking for offensive and defensive scoring'],
         "image": "https://i.postimg.cc/Ss7hBMts/neutral-lesson.jpg",
     },
     1:{
         "lesson_id": "1",
-        "Section": "Posistions", 
-        "title": "Top",
+        "Section": "Top", 
+        "title": "Positions",
         "main-text": '“Top” is when one wrestler is on top of the other (Black Singlet)',
         "sub-text": ['May be chosen as starting position for 2nd and 3rd periods','Results after one wrestler takes the other from neutral to the mat'],
         "image": "https://i.postimg.cc/15W9RDRV/top-lesson.jpg",
     },
     2:{
         "lesson_id": "2",
-        "Section": "Posistions", 
-        "title": "Bottom",
+        "Section": "Bottom", 
+        "title": "Positions",
         "main-text": '“Bottom” is when one wrestler is under the other (White Singlet)',
         "sub-text": ['May be chosen as starting position for 2nd and 3rd periods','Results after one wrestler takes the other from neutral to the mat'],
         "image": "https://i.postimg.cc/x8n08RbM/bottom-lesson.jpg",
     },
     3:{
         "lesson_id": "3",
-        "Section": "Takedown", 
-        "title": "Takedown Scoring",
+        "Section": "Takedown Scoring", 
+        "title": "Takedown",
         "main-text": 'Takedown” is when one wrestler takes another down from neutral onto the mat.',
         "sub-text": ['3 Points Awarded to Blue assuming he brings yellow to the ground'],
         "expanded-text": ['A takedown is called by the ref once they deem a wrestler has gained control of the other.', 'This can be vague and result in confusing situations.'],
@@ -78,16 +78,16 @@ lessons = {
     },
     4:{
         "lesson_id": "4",
-        "Section": "Takedown", 
-        "title": "Takedown Scoring",
+        "Section": "Takedown Scoring", 
+        "title": "Takedown",
         "main-text": 'The wrestler in yellow demonstrates control',
         "sub-text": ['He hooks the ankle of his opponent!'],
         "image": "https://i.postimg.cc/bJVXDVxf/Wrestling-Takedown-GIF-by-NCAA-Championships-1.gif",
     },
     5:{
         "lesson_id": "5",
-        "Section": "Nearfall", 
-        "title": "Nearfall Scoring",
+        "Section": "Nearfall Scoring", 
+        "title": "Nearfall",
         "main-text": '“Nearfall” or Back points are scored when a wrestler’s back is exposed within a 45° angle from the mat.',
         "sub-text": [
             'Points are counted roughly every second by the referee, visualized by a sweeping motion with their arm.',
@@ -99,8 +99,8 @@ lessons = {
     },
     6:{
         "lesson_id": "6",
-        "Section": "Reversals", 
-        "title": "Reversal Scoring",
+        "Section": "Reversals Scoring", 
+        "title": "Reversals",
         "main-text": 'A “Reversal” is when the wrestler on the bottom gains control over their opponent, ending up on top.',
         "sub-text": [
             'Reversals are worth 2 points.',
@@ -111,8 +111,8 @@ lessons = {
     },
     7:{
         "lesson_id": "7",
-        "Section": "Escapes", 
-        "title": "Escape Scoring",
+        "Section": "Escapes Scoring", 
+        "title": "Escapes",
         "main-text": 'An “Escape” is when the wrestler on the bottom gets away from their opponent and returns to a neutral position.',
         "sub-text": [
             'Escapes are worth 1 point.',
@@ -131,7 +131,7 @@ def home():
 def get_nav_sections():
     unique_sections = {}
     for k, v in lessons.items():
-        section = v['Section']
+        section = v['title']
         if section not in unique_sections:
             unique_sections[section] = v
     return unique_sections.values()
@@ -173,14 +173,6 @@ def quiz_score():
                 score += 1
     return render_template('quiz_score.html', score=score, answers=answers, nav_lessons=get_nav_sections())
   
-
-@app.route('/positions')
-def positions():
-    return render_template('positions.html', nav_lessons=get_nav_sections())
-
-@app.route('/api/positions')
-def api_positions():
-    return jsonify(lessons)
 
 @app.route('/learn/<int:lesson_id>', methods=['GET'])
 def learn(lesson_id):

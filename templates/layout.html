@@ -25,7 +25,7 @@
     <ul class="navbar-nav flex-row gap-4">
       {% for lesson in nav_lessons %}
         <li class="nav-item">
-          <a class="nav-link" href="/learn/{{ lesson.lesson_id }}">{{ lesson.Section }}</a>
+          <a class="nav-link" href="/learn/{{ lesson.lesson_id }}">{{ lesson.title }}</a>
         </li>
       {% endfor %}
       <li class="nav-item">
