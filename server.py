@@ -191,7 +191,7 @@ def quiz(question_id):
         return redirect(url_for('quiz', question_id=question_id+1))
     
     template = f"quiz_{question['type']}.html"
-    return render_template(template, question=question, question_id=question_id, nav_lessons=get_nav_sections())
+    return render_template(template, question=question, question_id=question_id, nav_lessons=get_nav_sections(), total_questions=len(questions))
 
 @app.route('/quiz_score')
 def quiz_score():

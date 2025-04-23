@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container">
+    <div class="d-flex justify-content-end">
+        <span class="badge bg-secondary fs-5">{{ question_id + 1 }}/{{ total_questions }}</span>
+    </div>
     <div class="page_header">Quiz</div>
     <div class="quiz_question">Question: {{ question.text }}</div>
     {% if question.media %}
