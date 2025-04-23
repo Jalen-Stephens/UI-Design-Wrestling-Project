@@ -8,10 +8,10 @@
     <div>
         {% for question in answers %}
         <div>
-            Correct Answer: {{ answers[question].answer }}
+            Your Answer: {{ answers[question].submission }}
         </div>
         <div>
-            Your Answer: {{ answers[question].submission }}
+            Correct Answer: {{ answers[question].answer }}
         </div>
         <br>
         {% endfor %}
