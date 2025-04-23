@@ -223,13 +223,13 @@ def log_time():
         raw_data = request.data.decode('utf-8')
         data = json.loads(raw_data)
 
-        lesson_id = data.get('lesson_id')
+        content_type = data.get('type')  # 'quiz' or 'lesson'
+        content_id = data.get('id')
         time_spent = data.get('time_spent')
-
-        print(f"[LOG] Lesson {lesson_id} — Time Spent: {time_spent} seconds")
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         with open("user_time_log.csv", "a") as f:
-            f.write(f"{lesson_id},{time_spent},{datetime.datetime.now()}\n")
+            f.write(f"{content_type},{content_id},{time_spent},{timestamp}\n")
 
         return jsonify({"status": "logged"}), 200
 

@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const timeSpent = Math.round((Date.now() - startTime) / 1000);
 
         const payload = JSON.stringify({
-            lesson_id: typeof lesson_id !== 'undefined' ? lesson_id : -1,
+            type: "lesson",
+            id: lesson_id,
             time_spent: timeSpent
         });
 

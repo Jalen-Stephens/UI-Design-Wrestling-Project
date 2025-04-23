@@ -30,4 +30,21 @@
 </div>
 
 <script src="{{ url_for('static', filename='dd_quiz.js') }}"></script>
+<script>
+    const quizStartTime = Date.now();
+
+    window.addEventListener("beforeunload", () => {
+        const timeSpent = Math.round((Date.now() - quizStartTime) / 1000);
+
+        navigator.sendBeacon(
+            "/log-time",
+            JSON.stringify({
+                type: "quiz",
+                id: {{ question_id }},
+                time_spent: timeSpent
+            })
+        );
+    });
+</script>
+
 {% endblock %}
