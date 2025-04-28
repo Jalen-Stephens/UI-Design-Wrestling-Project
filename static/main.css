@@ -78,3 +78,22 @@ h1, h2, .display-4, .lead {
   color: #ff453a;
   border: 1px solid #ff453a;
 }
+
+/* 11) Make left-side copy larger */
+#main-text {
+  font-size: 1.5rem;    /* was 1.25rem */
+  line-height: 1.8;
+}
+#sub-text li {
+  font-size: 1.3rem;    /* was 1.1rem */
+  line-height: 1.6;
+}
+
+/* 12) Ensure expanded-text bullets are white and match size */
+#expanded-text,
+#expanded-text li {
+  color: #d1d1d6 !important;
+  font-size: 1.4rem;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}

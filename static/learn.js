@@ -7,24 +7,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const createExpandButton = () => {
         const expandButton = document.createElement("button");
         expandButton.id = "expand";
-        expandButton.className = "btn btn-primary";
+        expandButton.className = "btn btn-primary mt-3";
         expandButton.textContent = "Learn More";
 
         expandButton.addEventListener("click", () => {
             imageBox.style.display = "none";
 
-            const expandedText = document.createElement("p");
-            expandedText.innerHTML = lesson["expanded-text"];
-            expandedText.id = "expanded-text";
-            imageBoxContainer.appendChild(expandedText);
+            // Build a bullet list from expanded-text array
+            const expandedList = document.createElement("ul");
+            expandedList.id = "expanded-text";
 
+            lesson["expanded-text"].forEach(sentence => {
+                const li = document.createElement("li");
+                li.textContent = sentence;
+                expandedList.appendChild(li);
+            });
+
+            imageBoxContainer.appendChild(expandedList);
+
+            // Button to show image again
             const showImageBtn = document.createElement("button");
             showImageBtn.textContent = "Show Image";
             showImageBtn.className = "btn btn-secondary mt-2";
             showImageBtn.id = "show-image-btn";
 
             showImageBtn.addEventListener("click", () => {
-                expandedText.remove();
+                expandedList.remove();
                 imageBox.style.display = "block";
                 showImageBtn.remove();
 
@@ -33,14 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             imageBoxContainer.appendChild(showImageBtn);
-            expandButton.remove(); // Remove original expand
+            expandButton.remove(); // Remove original Learn More button
         });
 
-        imageBoxContainer.insertBefore(expandButton, imageBox);
+        // Insert the button below the image
+        imageBoxContainer.appendChild(expandButton);
     };
 
-    // Only create if expanded text exists
-    if (lesson["expanded-text"]) {
+    // Only create button if there's expanded text
+    if (lesson["expanded-text"] && lesson["expanded-text"].length) {
         createExpandButton();
     }
 
