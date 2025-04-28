@@ -4,7 +4,7 @@
 /* 2) Global dark background + Roboto */
 body {
   background-color: #1c1c1e;       /* iOS dark system background */
-  color: #ffffff;                  /* primary text */
+  color: #d1d1d6;                  /* primary text */
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;
 }
