@@ -1,36 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<script>
-    $(document).ready(function() {
-        const questionId = window.location.pathname.split('/').pop();
-        const $quizForm = $('#quizForm.multiple_choice'); // Target the multiple_choice form
-        const $feedbackMessage = $('#feedbackMessage');
-        const $nextButton = $('#next-button');
-        // Handle form submission via AJAX
-        $quizForm.submit(function (e) {
-            e.preventDefault();
-            const formData =  $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: '/quiz/' + questionId,
-                data: formData,
-                dataType: 'json',
-                success: function (response) {
-                    if (response.correct) {
-                        $feedbackMessage.removeClass('alert-danger').addClass('alert-success').text('Congratulations, you got it correct!').show();
-                    } else {
-                        $feedbackMessage.removeClass('alert-success').addClass('alert-danger').text('Incorrect. The answer is: '+ response.correct_answer).show();
-                    }
-                    $nextButton.attr('href', '/quiz/' + (parseInt(questionId) + 1)).removeClass('d-none');
-                    $quizForm.find('input[type="radio"], button').prop('disabled', true); // Disable radio buttons and submit button
-                },
-                error: function () {
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        });
-    });
-</script>
+<script src="{{ url_for('static', filename='multiple_choice_quiz.js') }}"></script>
 
 <div class="container">
     <div class="d-flex justify-content-end">
@@ -50,7 +20,7 @@
             <input class="form-check-input" type="radio" name="answer" id="option{{ loop.index }}" value="{{ option }}" required>
             <label class="form-check-label" for="option{{ loop.index }}">
                 {{ option }}
-            </label>    
+            </label>
         </div>
         {% endfor %}
         <br>

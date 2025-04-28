@@ -206,7 +206,7 @@ def quiz_score():
         else:
             if(str(answers[i]["answer"]) == str(answers[i]["submission"])):
                 score += 1
-    return render_template('quiz_score.html', score=score, answers=answers, nav_lessons=get_nav_sections())
+    return render_template('quiz_score.html', score=score, answers=answers, questions=questions, total_questions=len(questions), nav_lessons=get_nav_sections())
   
 
 @app.route('/learn/<int:lesson_id>', methods=['GET'])

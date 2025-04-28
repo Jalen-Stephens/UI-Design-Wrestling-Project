@@ -32,16 +32,40 @@
 .container {
     padding: 2rem;
 }
+
 .quiz_question {
     color: rgb(115, 110, 110);
-    padding: 10px;
-    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 22px;
+}
+
+.quiz_media img{
+    display: block;
+    margin: 20px auto;
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border: 4px solid #b1acac;
+    border-radius: 8px;
+}
+
+#quiz_score{
+    font-size: 22px;
+    color:  rgb(115, 110, 110);
+    text-align: center;
+}
+
+.quiz_result{
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .page_header {
-    color: black;
-    font-size: 30px;
+    color: #333;
+    font-size: 48px;
     text-align: center;
+    font-weight: bold;
 }
 
 .droperror

@@ -1,19 +1,35 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container">
-    <div>
-        Score: {{ score }}
-    </div>
+    <div class="page_header">Results</div>
+    <div id="quiz_score">Final Score: {{ score }}/{{ total_questions }}</div>
+    {% if score >= 80 %}
+        <div>Amazing job! You've mastered the art of scoring wrestling matches.</div>
+    {% elif score >= 50 %}
+        <div>Good effort!</div>
+    {% else %}
+        <div>Review the learn section and retake the quiz!</div>
+    {% endif %}    
     <br>
-    <div>
-        {% for question in answers %}
-        <div>
-            Your Answer: {{ answers[question].submission }}
-        </div>
-        <div>
-            Correct Answer: {{ answers[question].answer }}
-        </div>
-        <br>
+    <div class="mt-4">
+        {% for question_id in answers %}
+            <div class="row mb-4"> 
+                <div class="col-12">
+                    <div class="quiz_result bg-light p-3 rounded">
+                        Question: {{ questions[question_id].text }}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mt-2">
+                    <div class="p-3 bg-info rounded">
+                        Your Answer:{{ answers[question_id].submission }}
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mt-2">
+                    <div class="p-3 bg-success rounded">
+                        Correct Answer: {{ answers[question_id].answer }}
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </div>
 </div>
