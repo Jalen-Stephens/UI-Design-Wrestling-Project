@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+<script src="{{ url_for('static', filename='review_multiple_choice.js') }}"></script>
+
+<div class="container">
+    <div class="d-flex justify-content-end">
+        <span class="badge bg-secondary fs-5">{{ question_id + 1 }}/{{ total_questions }}</span>
+    </div>
+    <div class="page_header">Quiz</div>
+    <div class="quiz_question">Question: {{ question.text }}</div>
+    {% if question.media %}
+    <div class="quiz_media">
+        <img src="{{ question.media }}" alt="Question Media">
+    </div>
+    {% endif %}
+    
+    <form id="quizForm" class="multiple_choice" method="POST" action="{{ url_for('review_questions', lesson_id=question_id) }}">
+        {% for option in question.options %}
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="answer" id="option{{ loop.index }}" value="{{ option }}" required>
+            <label class="form-check-label" for="option{{ loop.index }}">
+                {{ option }}
+            </label>
+        </div>
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <div id="feedbackMessage" class="mt-3" style="display: none;"></div>
+    <a href="{{ url_for('learn', lesson_id=question_id + 1) }}" class="btn btn-success mt-2 d-none" id="next-button">Next</a>
+</div>
+<script>
+    const quizStartTime = Date.now();
+
+    window.addEventListener("beforeunload", () => {
+        const timeSpent = Math.round((Date.now() - quizStartTime) / 1000);
+
+        navigator.sendBeacon(
+            "/log-time",
+            JSON.stringify({
+                type: "quiz",
+                id: {{ question_id }},
+                time_spent: timeSpent
+            })
+        );
+    });
+</script>
+
+{% endblock %}

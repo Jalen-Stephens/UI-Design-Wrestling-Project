@@ -115,6 +115,17 @@ lessons = {
     },
     3:{
         "lesson_id":"3",
+        "Section":"review",
+        "title":"Positions",
+        "type": "drag_drop",
+        "text": "What position is the wrestler in 'Irish' in before and after the move?",
+        "drag_options": ["Top", "Bottom", "Neutral"],
+        "drop_options": ["Start", "End"],
+        "media": "https://i.postimg.cc/BnC8WwGz/Scramble-Takedown.gif",
+        "next_lesson": "4",
+    },
+    4:{
+        "lesson_id":"4",
         "Section":"Takedown Scoring",
         "title":"Takedown",
         "main-text":"“Takedown” is when one wrestler takes another down from neutral onto the mat.",
@@ -127,8 +138,8 @@ lessons = {
         ],
         "image":"https://i.postimg.cc/QtTPCNd1/roman-bravo-young-ragusin.avif",
     },
-    4:{
-        "lesson_id":"4",
+    5:{
+        "lesson_id":"5",
         "Section":"Takedown Scoring",
         "title":"Takedown",
         "main-text":"The wrestler in yellow demonstrates control",
@@ -137,8 +148,17 @@ lessons = {
         ],
         "image":"https://i.postimg.cc/bJVXDVxf/Wrestling-Takedown-GIF-by-NCAA-Championships-1.gif",
     },
-    5:{
-        "lesson_id":"5",
+    6:{
+        "lesson_id":"6",
+        "Section":"review",
+        "title":"Takedown",
+        "type": "textbox",
+        "text": "How many points were scored by orange in this exchange?", 
+        "media":  "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHFrbXVnMXFuNjB5NXRuZWcwcWp0aXZ4MWN2emJsZXplenQwNnR6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/upJkEoxKC97OO3wv4q/giphy.gif",
+        "next_lesson": "7",
+    },
+    7:{
+        "lesson_id":"7",
         "Section":"Nearfall Scoring",
         "title":"Nearfall",
         "main-text":"“Nearfall” or Back points are scored when a wrestler’s back is exposed within a 45° angle from the mat.",
@@ -154,8 +174,18 @@ lessons = {
         ],
         "image":"https://i.postimg.cc/cH32JWth/temp-Image-Iy11-C0.avif",
     },
-    6:{
-        "lesson_id":"6",
+    8:{
+        "lesson_id":"8",
+        "Section": "review",
+        "title":"Nearfall",
+        "type": "multiple_choice",
+        "text": "How many points are scored in a takedown?", 
+        "media": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzlhNGVob3R1eG8wZ3AwbXRtNWV2Nzh5ZTE5eW4xbXFycWV1a2s5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bM1uXhDYFMzU4GfJdq/giphy.gif",
+        "options": ["2", "4", "3"],
+        "next_lesson": "9",
+    },
+    9:{
+        "lesson_id":"9",
         "Section":"Reversals Scoring",
         "title":"Reversals",
         "main-text":"A “Reversal” is when the wrestler on the bottom gains control over their opponent, ending up on top.",
@@ -170,8 +200,18 @@ lessons = {
         ],
         "image":"https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcng5YW8ydWgyb3NhNG91cmI3ZnRlaGJwYzdldmtmbXdqajA0cDU4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT1R9XsuEBIyFgplcI/giphy.gif",
     },
-    7:{
-        "lesson_id":"7",
+    10:{
+        "lesson_id":"10",
+        "Section":"review",
+        "title":"Reversals",
+        "type": "multiple_choice",
+        "text": "What type of score was this from the wrestler in Orange?", 
+        "media":  "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHFrbXVnMXFuNjB5NXRuZWcwcWp0aXZ4MWN2emJsZXplenQwNnR6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/upJkEoxKC97OO3wv4q/giphy.gif",
+        "options": ["Nearfall", "Escape", "Takedown", "Reversal"],
+        "next_lesson": "11",
+    },
+    11:{
+        "lesson_id":"11",
         "Section":"Escapes Scoring",
         "title":"Escapes",
         "main-text":"An “Escape” is when the wrestler on the bottom gets away from their opponent and returns to a neutral position.",
@@ -188,6 +228,28 @@ lessons = {
     }
 }
 
+rev_answers = {
+    3:{
+        "review_id": "3",
+        "answer": {"Start":"Neutral","End":"Top"},
+        "submission":{}
+    },
+    6:{
+        "review_id": "6",
+        "answer": 3,
+        "submission":None
+    },
+    8:{
+        "review_id": "8",
+        "answer": 3,
+        "submission":None
+    },
+    10:{
+        "review_id": "10",
+        "answer": "Takedown",
+        "submission":None
+    },
+}
 
 
 @app.route('/')
@@ -254,8 +316,50 @@ def quiz_score():
 def learn(lesson_id):
     if lesson_id < 0 or lesson_id >= len(lessons):
         return redirect(url_for('quiz', question_id=0))  # Redirect to quiz if out of bounds
+    
     lesson = lessons[lesson_id]
+    
+    # Check if the lesson is a review section
+    if lesson.get("Section") == "review":
+        review_id = int(lesson["lesson_id"])
+        answer = rev_answers.get(review_id, {}).get("answer", None)
+        template = f"review_{lesson['type']}.html"
+        return render_template(template, question=lesson, question_id=review_id, total_questions=len(lessons), nav_lessons=get_nav_sections(), correct_answer=answer)
+    
+    # Render regular lesson
     return render_template('learn.html', lesson=lesson, lesson_id=lesson_id, nav_lessons=get_nav_sections(), total_lessons=len(lessons))
+
+@app.route('/review/<int:lesson_id>', methods=['GET', 'POST'])
+def review_questions(lesson_id):
+    if lesson_id >= len(lessons):
+        return redirect(url_for('learn', lesson_id=0))  # Redirect to the first lesson if out of bounds
+
+    review = lessons[lesson_id]
+    review_type = review['type']
+    is_correct = False
+
+    if request.method == 'POST':
+        if review_type == "drag_drop":
+            submission = dict(request.form)
+            rev_answers[lesson_id]["submission"] = submission
+            is_correct = rev_answers[lesson_id]["answer"] == submission
+            return jsonify({'correct': is_correct, 'correct_answer': rev_answers[lesson_id]["answer"]})
+        elif review_type == 'textbox':
+            submission = request.form.get('answer').strip()
+            rev_answers[lesson_id]["submission"] = submission
+            is_correct = str(rev_answers[lesson_id]["answer"]) == str(submission)
+            return jsonify({'correct': is_correct, 'correct_answer': rev_answers[lesson_id]["answer"]})
+        elif review_type == 'multiple_choice':
+            submission = request.form.get('answer')
+            rev_answers[lesson_id]["submission"] = submission
+            is_correct = str(rev_answers[lesson_id]["answer"]) == str(submission)
+            return jsonify({'correct': is_correct, 'correct_answer': rev_answers[lesson_id]["answer"]})
+
+    template = f"review_{review['type']}.html"
+    return render_template(template, question=review, question_id=lesson_id, nav_lessons=get_nav_sections(), total_questions=len(lessons))
+
+
+
 
 
 @app.route('/log-time', methods=['POST'])
