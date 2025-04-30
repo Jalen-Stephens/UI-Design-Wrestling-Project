@@ -17,7 +17,6 @@ $(document).ready(function(){
             data: formData,
             dataType: 'json',
             success: function (response) {
-                console.log(response)
                 if (response.correct) {
                     $feedbackMessage.removeClass('alert-danger').addClass('alert-success').text('Congratulations, you got it correct!').show();
                 } else {
@@ -45,14 +44,17 @@ function onDragOver(event)
 function onDrop(event)
 {
     event.preventDefault()
+    $(event.target).removeClass("droperror")
+    $(event.target).text(event.target.id)
     const data = event.dataTransfer.getData("text")
     event.target.appendChild(document.getElementById(data))
 
     hidden_input = document.getElementById(event.target.id + "_submit")
-    hidden_input.value = data
-
-    $(event.target).removeClass("droperror")
-    $(event.target).textContent = event.target.id
+    hidden_input.value = event.target.children[0].id
+    for(i = 1; i < event.target.children.length; i++)
+    {
+        hidden_input.value += ","+event.target.children[i].id
+    }
 }
 
 function validateForm()
@@ -66,14 +68,14 @@ function validateForm()
     submissions = {}
     for(let i = 0; i < dropopt.length; i++)
     {
-        if(!document.getElementById(dropopt[i] + "_submit").value)
+        if(document.getElementById(dropopt[i]).children.length < 1)
         {
             while(i < dropopt.length)
             {
-                if(!document.getElementById(dropopt[i] + "_submit").value)
+                if(document.getElementById(dropopt[i]).children.length < 1)
                 {
                     $(document.getElementById(dropopt[i])).addClass("droperror")
-                    $(document.getElementById(dropopt[i])).textContent = "Input Required"
+                    $(document.getElementById(dropopt[i])).text(dropopt[i]+"\n*required")
                 }
                 i++
             }

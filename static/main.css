@@ -76,7 +76,10 @@ h1, h2, .display-4, .lead {
 /* 10) Error text remain red but softer on dark */
 .droperror {
   color: #ff453a;
-  border: 1px solid #ff453a;
+  border: 1px solid #ff453a !important;
+  font-size: 12px;
+  white-space: pre;
+  text-align: center;
 }
 
 /* 11) Make left-side copy larger */
@@ -96,4 +99,50 @@ h1, h2, .display-4, .lead {
   font-size: 1.4rem;
   line-height: 1.7;
   margin-bottom: 0.75rem;
+}
+
+/* 13) Drag and drop boxs alignment and color */
+.drag-options
+{
+  border: 1px solid #ffffff;
+  height: 35px;
+  width: 100px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 5px 0px 5px;
+}
+.drop-options
+{
+  border: 1px solid #ffffff;
+  height: 75px;
+  width: 150px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 10px 0px 10px;
+}
+
+/* 14) Quiz button and feedback alignment */
+#feedbackMessage
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quiz-buttons
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 15) Quiz feedback style */
+.alert-danger
+{
+  color: #ff3b30;
+}
+.alert-success
+{
+  color: #198754;
 }

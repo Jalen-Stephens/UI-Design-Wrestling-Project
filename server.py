@@ -278,6 +278,9 @@ def quiz(question_id):
     if request.method == 'POST':
         if(question_type == "drag_drop"):
             submission = dict(request.form)
+            for i in submission:
+                if(len(submission[i].split(',')) > 1):
+                    submission[i] = submission[i].split(',')
             answers[question_id]["submission"] = submission
             is_correct = answers[question_id]["answer"] == submission
             return jsonify({'correct': is_correct, 'correct_answer': answers[question_id]["answer"]})
