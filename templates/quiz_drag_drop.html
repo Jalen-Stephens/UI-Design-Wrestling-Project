@@ -13,7 +13,7 @@
     {% endif %}
     <br>
     <form id="quizForm" class="drag_drop" method="POST">
-        <div style="display: flex; justify-content: center;">
+        <div class="option-bank" ondrop="onDrop(event)" ondragover="onDragOver(event)">
             {% for option in question.drag_options %}
             <p id="{{ option }}" class="drag-options" draggable="true" ondragstart="onDragStart(event)">{{ option }}</p>
             {% endfor %}

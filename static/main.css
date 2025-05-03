@@ -105,22 +105,36 @@ h1, h2, .display-4, .lead {
 .drag-options
 {
   border: 1px solid #ffffff;
-  height: 35px;
-  width: 100px;
+  width: fit-content;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  padding: 5px 10px 5px 10px;
   margin: 0px 5px 0px 5px;
 }
 .drop-options
 {
   border: 1px solid #ffffff;
-  height: 75px;
-  width: 150px;
+  min-height: 75px;
+  min-width: 150px;
+  width: fit-content;
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  padding: 0px 10px 0px 10px;
   margin: 0px 10px 0px 10px;
+}
+.option-bank
+{
+  min-height: 50px;
+  min-width: 100px;
+  width: fit-content;
+  border: 1px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px 10px 0px;
+  margin: 0 auto;
 }
 
 /* 14) Quiz button and feedback alignment */

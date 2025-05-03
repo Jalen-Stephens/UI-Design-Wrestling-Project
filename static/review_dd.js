@@ -44,14 +44,35 @@ function onDragOver(event)
 function onDrop(event)
 {
     event.preventDefault()
-    const data = event.dataTransfer.getData("text")
-    event.target.appendChild(document.getElementById(data))
 
-    hidden_input = document.getElementById(event.target.id + "_submit")
-    hidden_input.value = data
+    let target = event.target.draggable ? event.target.parentElement : event.target
 
-    $(event.target).removeClass("droperror")
-    $(event.target).textContent = event.target.id
+    for(i = 0; i < target.classList.length; i++)
+    {
+        if(target.classList[i] == "droperror")
+        {
+            $(target).removeClass("droperror")
+            $(target).text(target.id)
+        }
+    }
+
+    let data = event.dataTransfer.getData("text")
+    target.appendChild(document.getElementById(data))
+
+    updateHiddenInput(target)
+}
+
+function updateHiddenInput(target)
+{
+    let hidden_input = document.getElementById(target.id + "_submit")
+    if(hidden_input)
+    {
+        hidden_input.value = target.children[0].id
+        for(i = 1; i < target.children.length; i++)
+        {
+            hidden_input.value += ","+target.children[i].id
+        }
+    }
 }
 
 function validateForm()
@@ -65,14 +86,14 @@ function validateForm()
     submissions = {}
     for(let i = 0; i < dropopt.length; i++)
     {
-        if(!document.getElementById(dropopt[i] + "_submit").value)
+        if(document.getElementById(dropopt[i]).children.length < 1)
         {
             while(i < dropopt.length)
             {
-                if(!document.getElementById(dropopt[i] + "_submit").value)
+                if(document.getElementById(dropopt[i]).children.length < 1)
                 {
                     $(document.getElementById(dropopt[i])).addClass("droperror")
-                    $(document.getElementById(dropopt[i])).textContent = "Input Required"
+                    $(document.getElementById(dropopt[i])).text(dropopt[i]+"\n*required")
                 }
                 i++
             }
@@ -80,6 +101,7 @@ function validateForm()
         }
         else
         {
+            updateHiddenInput(document.getElementById(dropopt[i]))
             submissions[dropopt[i]] = document.getElementById(dropopt[i] + "_submit").value
         }
     }

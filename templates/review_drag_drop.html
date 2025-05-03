@@ -11,23 +11,28 @@
         <img src="{{ question.media }}" alt="Question Media">
     </div>
     {% endif %}
+    <br>
     <form id="quizForm" class="drag_drop" method="POST" action="{{ url_for('review_questions', lesson_id=question_id) }}">
-        {% for option in question.drag_options %}
-        <p id="{{ option }}" draggable="true" ondragstart="onDragStart(event)" style="border: 1px solid black;">{{ option }}</p>
-        {% endfor %}
+        <div class="option-bank" ondrop="onDrop(event)" ondragover="onDragOver(event)" style="margin: 0px 0px 0px 10px;">
+            {% for option in question.drag_options %}
+            <p id="{{ option }}" class="drag-options" draggable="true" ondragstart="onDragStart(event)">{{ option }}</p>
+            {% endfor %}
+        </div>
         <br>
-        {% for option in question.drop_options %}
-        <div id="{{ option }}" ondrop="onDrop(event)" ondragover="onDragOver(event)" style="border: 1px solid black;">{{ option }}</div>
-        <input type="hidden" name="{{ option }}" id="{{ option }}_submit">
+        <div style="display: flex;">
+            {% for option in question.drop_options %}
+            <div id="{{ option }}" class="drop-options" ondrop="onDrop(event)" ondragover="onDragOver(event)">{{ option }}</div>
+            <input type="hidden" name="submission" id="{{ option }}_submit">
+            {% endfor %}
+        </div>
         <br>
-        {% endfor %}
-        <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="quiz-buttons">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{{ url_for('quiz', question_id=question_id + 1) }}" class="btn btn-success d-none" id="next-button">Next</a>
+        </div>
     </form>
-    
-    <div id="feedbackMessage" class="mt-3" style="display: none;"></div>
-    <a href="{{ url_for('learn', lesson_id=question_id + 1) }}" class="btn btn-success mt-2 d-none" id="next-button">Next</a>
 </div>
+<div id="feedbackMessage" class="mt-3"></div>
 
 <script src="{{ url_for('static', filename='review_dd.js') }}"></script>
 <script>

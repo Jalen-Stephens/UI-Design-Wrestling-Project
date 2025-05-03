@@ -44,16 +44,34 @@ function onDragOver(event)
 function onDrop(event)
 {
     event.preventDefault()
-    $(event.target).removeClass("droperror")
-    $(event.target).text(event.target.id)
-    const data = event.dataTransfer.getData("text")
-    event.target.appendChild(document.getElementById(data))
 
-    hidden_input = document.getElementById(event.target.id + "_submit")
-    hidden_input.value = event.target.children[0].id
-    for(i = 1; i < event.target.children.length; i++)
+    let target = event.target.draggable ? event.target.parentElement : event.target
+
+    for(i = 0; i < target.classList.length; i++)
     {
-        hidden_input.value += ","+event.target.children[i].id
+        if(target.classList[i] == "droperror")
+        {
+            $(target).removeClass("droperror")
+            $(target).text(target.id)
+        }
+    }
+
+    let data = event.dataTransfer.getData("text")
+    target.appendChild(document.getElementById(data))
+
+    updateHiddenInput(target)
+}
+
+function updateHiddenInput(target)
+{
+    let hidden_input = document.getElementById(target.id + "_submit")
+    if(hidden_input)
+    {
+        hidden_input.value = target.children[0].id
+        for(i = 1; i < target.children.length; i++)
+        {
+            hidden_input.value += ","+target.children[i].id
+        }
     }
 }
 
@@ -83,8 +101,10 @@ function validateForm()
         }
         else
         {
+            updateHiddenInput(document.getElementById(dropopt[i]))
             submissions[dropopt[i]] = document.getElementById(dropopt[i] + "_submit").value
         }
     }
+    console.log(submissions)
     return submissions
 }
