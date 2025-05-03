@@ -136,6 +136,14 @@ h1, h2, .display-4, .lead {
   padding: 10px 0px 10px 0px;
   margin: 0 auto;
 }
+.drag-over
+{
+  border: 1px dotted #ffffff;
+}
+.mouse-over
+{
+  border: 2px solid #ffffff;
+}
 
 /* 14) Quiz button and feedback alignment */
 #feedbackMessage

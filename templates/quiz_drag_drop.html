@@ -13,15 +13,15 @@
     {% endif %}
     <br>
     <form id="quizForm" class="drag_drop" method="POST">
-        <div class="option-bank" ondrop="onDrop(event)" ondragover="onDragOver(event)">
+        <div class="option-bank" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
             {% for option in question.drag_options %}
-            <p id="{{ option }}" class="drag-options" draggable="true" ondragstart="onDragStart(event)">{{ option }}</p>
+            <p id="{{ option }}" class="drag-options" draggable="true" ondragstart="onDragStart(event)" onmouseenter="onMouseEnter(event)" onmouseleave="onMouseLeave(event)">{{ option }}</p>
             {% endfor %}
         </div>
         <br>
         <div style="display: flex; justify-content: center;">
             {% for option in question.drop_options %}
-            <div id="{{ option }}" class="drop-options" ondrop="onDrop(event)" ondragover="onDragOver(event)">{{ option }}</div>
+            <div id="{{ option }}" class="drop-options" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">{{ option }}</div>
             <input type="hidden" name="submission" id="{{ option }}_submit">
             {% endfor %}
         </div>

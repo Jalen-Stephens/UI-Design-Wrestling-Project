@@ -36,16 +36,36 @@ function onDragStart(event)
     event.dataTransfer.setData("text", event.target.id)
 }
 
+function onMouseEnter(event)
+{
+    document.body.style.cursor = "grabbing";
+    $(event.target).addClass("mouse-over")
+}
+
+function onMouseLeave(event)
+{
+    document.body.style.cursor = "default";
+    $(event.target).removeClass("mouse-over")
+}
+
 function onDragOver(event)
 {
     event.preventDefault()
+    let target = event.target.draggable ? event.target.parentElement : event.target
+    $(target).addClass("drag-over")
+}
+
+function onDragLeave(event)
+{
+    let target = event.target.draggable ? event.target.parentElement : event.target
+    $(target).removeClass("drag-over")
 }
 
 function onDrop(event)
 {
     event.preventDefault()
-
     let target = event.target.draggable ? event.target.parentElement : event.target
+    $(target).removeClass("drag-over")
 
     for(i = 0; i < target.classList.length; i++)
     {
