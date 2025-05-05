@@ -118,10 +118,10 @@ lessons = {
         "Section":"review",
         "title":"Positions",
         "type": "drag_drop",
-        "text": "What position is the wrestler in 'Irish' in before and after the move?",
+        "text": "What position is the wrestler in Pennstate (Dark Blue) in before and after the move?",
         "drag_options": ["Top", "Bottom", "Neutral"],
         "drop_options": ["Start", "End"],
-        "media": "https://i.postimg.cc/BnC8WwGz/Scramble-Takedown.gif",
+        "media": "https://cdn.vox-cdn.com/uploads/chorus_asset/file/15869679/tumblr_plfz1txHj31qbrivdo1_400.gif",
         "next_lesson": "4",
     },
     4:{
@@ -153,8 +153,8 @@ lessons = {
         "Section":"review",
         "title":"Takedown",
         "type": "textbox",
-        "text": "How many points were scored by orange in this exchange?", 
-        "media":  "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHFrbXVnMXFuNjB5NXRuZWcwcWp0aXZ4MWN2emJsZXplenQwNnR6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/upJkEoxKC97OO3wv4q/giphy.gif",
+        "text": "How many points were scored by blue in this exchange?", 
+        "media":  "https://media3.giphy.com/media/6eE0hofFR3wpA7kyv7/200.gif?cid=6c09b952r3ska4pxkitg92kn7t2h3rwdxqcuuszaxztb3tvl&ep=v1_internal_gif_by_id&rid=200.gif&ct=g",
         "next_lesson": "7",
     },
     7:{
@@ -179,8 +179,8 @@ lessons = {
         "Section": "review",
         "title":"Nearfall",
         "type": "multiple_choice",
-        "text": "How many points are scored in a takedown?", 
-        "media": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzlhNGVob3R1eG8wZ3AwbXRtNWV2Nzh5ZTE5eW4xbXFycWV1a2s5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bM1uXhDYFMzU4GfJdq/giphy.gif",
+        "text": "What are the maximum amount of nearfall points scored here?", 
+        "media": "https://slack-imgs.com/?c=1&url=http%3A%2F%2Fi.imgur.com%2FJfDYplF.gif",
         "options": ["2", "4", "3"],
         "next_lesson": "9",
     },
@@ -205,8 +205,8 @@ lessons = {
         "Section":"review",
         "title":"Reversals",
         "type": "multiple_choice",
-        "text": "What type of score was this from the wrestler in Orange?", 
-        "media":  "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdHFrbXVnMXFuNjB5NXRuZWcwcWp0aXZ4MWN2emJsZXplenQwNnR6ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/upJkEoxKC97OO3wv4q/giphy.gif",
+        "text": "What type of score was this from the wrestler in Red?", 
+        "media":  "https://coeweb.calstatela.edu//2019f/edit/qroura/5600/webapp/Image/Reversal3.gif",
         "options": ["Nearfall", "Escape", "Takedown", "Reversal"],
         "next_lesson": "11",
     },
@@ -241,12 +241,12 @@ rev_answers = {
     },
     8:{
         "review_id": "8",
-        "answer": 3,
+        "answer": 4,
         "submission":None
     },
     10:{
         "review_id": "10",
-        "answer": "Takedown",
+        "answer": "Reversal",
         "submission":None
     },
 }
